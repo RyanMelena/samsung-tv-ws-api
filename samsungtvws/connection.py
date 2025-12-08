@@ -130,7 +130,7 @@ class SamsungTVWSBaseConnection:
         if token:
             _LOGGING.debug("Got token %s", token)
             self._set_token(token)
-        else
+        else:
             _LOGGING.debug("Failed to find token in %s", response)
 
     def _websocket_event(self, event: str, response: Dict[str, Any]) -> None:
