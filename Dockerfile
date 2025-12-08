@@ -1,0 +1,27 @@
+# syntax=docker/dockerfile:1
+
+FROM python:3-slim
+
+WORKDIR /build
+COPY pyproject.toml pyproject.toml
+COPY requirements.txt requirements.txt
+COPY setup.py setup.py
+RUN pip3 install .
+
+WORKDIR /app
+COPY examples/web_interface web_interface
+RUN pip3 install -r web_interface/requirements.txt
+
+COPY --from=node_builder build build
+COPY app.py app.py
+
+# Define an environment variable for the port with a default value
+ENV PORT=5000
+ENV MATTE=none
+ENV SLIDESHOW_UPDATE_INTERVAL_MINS=360
+ENV CHECK_FOR_NEW_ART_INTERVAL_MINS=600
+ENV PREVIEW_DURATION_SECS=30
+
+EXPOSE ${PORT}/tcp
+
+CMD [ "web_interface/web_interface.py", "$(TV_IP)", "--port=$(PORT)", "--folder=/app/images", "--matte=$(MATTE)", "--token_file=/app/conf/token.txt", "--update=$(SLIDESHOW_UPDATE_INTERVAL_MINS)", "--check=$(CHECK_FOR_NEW_ART_INTERVAL_MINS)", "--display_for=$(PREVIEW_DURATION_SECS)" ]
