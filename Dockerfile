@@ -24,7 +24,11 @@ ENV PREVIEW_DURATION_SECS=30
 
 EXPOSE ${PORT}/tcp
 
-ENTRYPOINT ["python3", "web_interface/web_interface.py"]
-CMD ["--port", "${PORT}", "--folder=/app/images", "--matte", "${MATTE}", \
-     "--token_file", "/app/conf/token.txt", "--update", "${SLIDESHOW_UPDATE_INTERVAL_MINS}", \
-     "--check", "${CHECK_FOR_NEW_ART_INTERVAL_MINS}", "--display_for", "${PREVIEW_DURATION_SECS}"]
+CMD web_interface/web_interface.py "$TV_IP" \
+    --port "$PORT" \
+    --folder /app/images \
+    --matte "$MATTE" \
+    --token_file /app/conf/token.txt \
+    --update "$SLIDESHOW_UPDATE_INTERVAL_MINS" \
+    --check "$CHECK_FOR_NEW_ART_INTERVAL_MINS" \
+    --display_for "$PREVIEW_DURATION_SECS"
