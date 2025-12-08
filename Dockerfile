@@ -4,6 +4,8 @@ FROM python:3-slim
 
 WORKDIR /build
 COPY samsungtvws samsungtvws
+COPY LICENSE LICENSE
+COPY README.md README.md
 COPY pyproject.toml pyproject.toml
 COPY requirements.txt requirements.txt
 COPY setup.py setup.py
