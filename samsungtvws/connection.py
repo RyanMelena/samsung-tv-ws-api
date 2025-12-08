@@ -107,10 +107,31 @@ class SamsungTVWSBaseConnection:
             self.token = token
 
     def _check_for_token(self, response: Dict[str, Any]) -> None:
-        token = response.get("data", {}).get("token")
+        data = response.get("data", {})
+        token = None
+
+        # 1. Old location
+        if isinstance(data.get("token"), str):
+            token = data["token"]
+    
+        # 2. Newer Samsung TVs return token as dict
+        elif isinstance(data.get("token"), dict):
+            token = data["token"].get("value")
+    
+        # 3. Token inside "clients"
+        clients = data.get("clients")
+        
+        if not token and isinstance(clients, list) and clients:
+            attributes = clients[0].get("attributes", {})
+            if "token" in attributes:
+                token = attributes["token"]
+            elif "token" in clients[0]:
+                token = clients[0]["token"]
         if token:
             _LOGGING.debug("Got token %s", token)
             self._set_token(token)
+        else
+            _LOGGING.debug("Failed to find token in %s", response)
 
     def _websocket_event(self, event: str, response: Dict[str, Any]) -> None:
         """Handle websocket event."""
