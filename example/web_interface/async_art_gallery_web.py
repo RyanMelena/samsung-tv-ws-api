@@ -45,7 +45,7 @@ except ImportError:
 from samsungtvws.async_art import SamsungTVAsyncArt
 from samsungtvws import __version__
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
     
 class PIL_methods:
     
