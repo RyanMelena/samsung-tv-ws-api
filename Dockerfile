@@ -12,9 +12,6 @@ WORKDIR /app
 COPY examples/web_interface web_interface
 RUN pip3 install -r web_interface/requirements.txt
 
-COPY --from=node_builder build build
-COPY app.py app.py
-
 # Define an environment variable for the port with a default value
 ENV PORT=5000
 ENV MATTE=none
