@@ -32,7 +32,7 @@ _LOGGING = logging.getLogger(__name__)
 class SamsungTVWSBaseConnection:
     _URL_FORMAT = "ws://{host}:{port}/api/v2/channels/{app}?name={name}"
     _SSL_URL_FORMAT = (
-        "wss://{host}:{port}/api/v2/channels/{app}?name={name}&token={token}"
+        "wss://{host}:{port}/api/v2/channels/{app}?name={name}"
     )
     _REST_URL_FORMAT = "{protocol}://{host}:{port}/api/v2/{route}"
 
@@ -74,7 +74,7 @@ class SamsungTVWSBaseConnection:
 
         websocket_url = ""
         if self._is_ssl_connection():
-            websocket_url = self._SSL_URL_FORMAT.format(**params)
+            websocket_url = (self._SSL_URL_FORMAT + "&token=").format(**params) if params["token"] else self._SSL_URL_FORMAT.format(**params)
         else:
             websocket_url = self._URL_FORMAT.format(**params)
 
