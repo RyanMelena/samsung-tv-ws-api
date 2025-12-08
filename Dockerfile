@@ -9,7 +9,7 @@ COPY setup.py setup.py
 RUN pip3 install .
 
 WORKDIR /app
-COPY examples/web_interface web_interface
+COPY example/web_interface web_interface
 RUN pip3 install -r web_interface/requirements.txt
 
 # Define an environment variable for the port with a default value
