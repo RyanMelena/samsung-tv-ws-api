@@ -33,4 +33,4 @@ CMD web_interface/web_interface.py "$TV_IP" \
     --update "$SLIDESHOW_UPDATE_INTERVAL_MINS" \
     --check "$CHECK_FOR_NEW_ART_INTERVAL_MINS" \
     --display_for "$PREVIEW_DURATION_SECS" \
-    --debug "$DEBUG"
+    --debug
