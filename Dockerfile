@@ -3,6 +3,7 @@
 FROM python:3-slim
 
 WORKDIR /build
+COPY samsungtws samsungtws
 COPY pyproject.toml pyproject.toml
 COPY requirements.txt requirements.txt
 COPY setup.py setup.py
