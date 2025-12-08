@@ -25,7 +25,7 @@ from exif_data import ExifData
 
 __version__ = '1.2.0'
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
 def parseargs():
     # Add command line argument parsing
