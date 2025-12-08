@@ -72,10 +72,14 @@ class SamsungTVWSBaseConnection:
             "token": self._get_token(),
         }
 
+        websocket_url = ""
         if self._is_ssl_connection():
-            return self._SSL_URL_FORMAT.format(**params)
+            websocket_url = self._SSL_URL_FORMAT.format(**params)
         else:
-            return self._URL_FORMAT.format(**params)
+            websocket_url = self._URL_FORMAT.format(**params)
+
+        _LOGGING.debug("Websocket URL is: %s", websocket_url)
+        return websocket_url
 
     def _format_rest_url(self, route: str = "") -> str:
         params = {
@@ -184,7 +188,10 @@ class SamsungTVWSConnection(SamsungTVWSBaseConnection):
         event: Optional[str] = None
         while event is None or event in IGNORE_EVENTS_AT_STARTUP:
             data = connection.recv()
+            _LOGGING.debug("*** RAW RECV: %s", data)
             response = helper.process_api_response(data)
+            _LOGGING.debug("*** PARSED RESPONSE: %s", response)
+
             event = response.get("event", "*")
             assert event
             self._websocket_event(event, response)
