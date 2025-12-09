@@ -604,13 +604,15 @@ async def main():
         logging.getLogger().setLevel(logging.DEBUG)
     log.debug('Debug mode')
     
-    args.folder = os.path.normpath(args.folder.strip())
+    args.folder = os.path.normpath(args.folder)
     
     if not os.path.exists(args.folder):
         log.warning('folder {} does not exist'.format(args.folder))
         os._exit(1)
 
-    args.data_dir = os.path.normpath(args.data_dir.strip())
+    log.info('Checking provided data_dir {}'.format(args.data_dir))
+    
+    args.data_dir = os.path.normpath(args.data_dir)
 
     if not os.path.exists(args.data_dir):
         log.warning('data_dir {} does not exist'.format(args.data_dir))
