@@ -32,7 +32,7 @@ _LOGGING = logging.getLogger(__name__)
 class SamsungTVWSBaseConnection:
     _URL_FORMAT = "ws://{host}:{port}/api/v2/channels/{app}?name={name}"
     _SSL_URL_FORMAT = (
-        "wss://{host}:{port}/api/v2/channels/{app}?name={name}"
+        "wss://{host}:{port}/api/v2/channels/{app}?name={name}&token={token}"
     )
     _REST_URL_FORMAT = "{protocol}://{host}:{port}/api/v2/{route}"
 
@@ -72,14 +72,10 @@ class SamsungTVWSBaseConnection:
             "token": self._get_token(),
         }
 
-        websocket_url = ""
         if self._is_ssl_connection():
-            websocket_url = (self._SSL_URL_FORMAT + "&token=").format(**params) if params["token"] else self._SSL_URL_FORMAT.format(**params)
+            return self._SSL_URL_FORMAT.format(**params)
         else:
-            websocket_url = self._URL_FORMAT.format(**params)
-
-        _LOGGING.debug("Websocket URL is: %s", websocket_url)
-        return websocket_url
+            return self._URL_FORMAT.format(**params)
 
     def _format_rest_url(self, route: str = "") -> str:
         params = {
@@ -111,31 +107,10 @@ class SamsungTVWSBaseConnection:
             self.token = token
 
     def _check_for_token(self, response: Dict[str, Any]) -> None:
-        data = response.get("data", {})
-        token = None
-
-        # 1. Old location
-        if isinstance(data.get("token"), str):
-            token = data["token"]
-    
-        # 2. Newer Samsung TVs return token as dict
-        elif isinstance(data.get("token"), dict):
-            token = data["token"].get("value")
-    
-        # 3. Token inside "clients"
-        clients = data.get("clients")
-        
-        if not token and isinstance(clients, list) and clients:
-            attributes = clients[0].get("attributes", {})
-            if "token" in attributes:
-                token = attributes["token"]
-            elif "token" in clients[0]:
-                token = clients[0]["token"]
+        token = response.get("data", {}).get("token")
         if token:
             _LOGGING.debug("Got token %s", token)
             self._set_token(token)
-        else:
-            _LOGGING.debug("Failed to find token in %s", response)
 
     def _websocket_event(self, event: str, response: Dict[str, Any]) -> None:
         """Handle websocket event."""
@@ -188,10 +163,7 @@ class SamsungTVWSConnection(SamsungTVWSBaseConnection):
         event: Optional[str] = None
         while event is None or event in IGNORE_EVENTS_AT_STARTUP:
             data = connection.recv()
-            _LOGGING.debug("*** RAW RECV: %s", data)
             response = helper.process_api_response(data)
-            _LOGGING.debug("*** PARSED RESPONSE: %s", response)
-
             event = response.get("event", "*")
             assert event
             self._websocket_event(event, response)
