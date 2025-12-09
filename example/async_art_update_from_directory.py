@@ -77,8 +77,9 @@ def parseargs():
     parser = argparse.ArgumentParser(description='Async Upload images to Samsung TV Version: {}'.format(__version__))
     parser.add_argument('ip', action="store", type=str, default=None, help='ip address of TV (default: %(default)s))')
     parser.add_argument('-f','--folder', action="store", type=str, default="./images", help='folder to load images from (default: %(default)s))')
+    parser.add_argument('-d','--data_dir', action='store_true', default="./", help='default data directory (default: %(default)s))')
     parser.add_argument('-m','--matte', action="store", type=str, default="none", help='default matte to use (default: %(default)s))')
-    parser.add_argument('-t','--token_file', action="store", type=str, default="token_file.txt", help='default token file to use (default: %(default)s))')
+    parser.add_argument('-t','--token_file', action="store", type=str, default="token_file.txt", help='token file to use in data_dir (default: %(default)s))')
     parser.add_argument('-u','--update', action="store", type=float, default=0, help='slideshow update period (mins) 0=off (default: %(default)s))')
     parser.add_argument('-c','--check', action="store", type=int, default=60, help='how often to check for new art 0=run once (default: %(default)s))')
     parser.add_argument('-s','--sync', action='store_false', default=True, help='automatically syncronize (needs Pil library) (default: %(default)s))')
@@ -224,7 +225,7 @@ class monitor_and_display:
     
     allowed_ext = ['jpg', 'jpeg', 'png', 'bmp', 'tif']
     
-    def __init__(self, ip, folder, period=5, update_time=1440, include_fav=False, sync=True, matte='none', sequential=False, on=False, token_file=None):
+    def __init__(self, ip, folder, period=5, update_time=1440, include_fav=False, sync=True, matte='none', sequential=False, on=False, token_file=None, data_dir=None):
         self.log = logging.getLogger('Main.'+__class__.__name__)
         self.debug = self.log.getEffectiveLevel() <= logging.DEBUG
         self.ip = ip
@@ -237,8 +238,8 @@ class monitor_and_display:
         self.sequential = sequential
         self.on = on
         # Autosave token to file
-        self.token_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), token_file) if token_file else token_file
-        self.program_data_path = './uploaded_files.json'
+        self.token_file = os.path.join(os.path.dirname(os.path.realpath(data_dir)), token_file) if token_file else token_file
+        self.program_data_path = os.path.join(os.path.dirname(os.path.realpath(data_dir)), 'uploaded_files.json') if data_dir else './uploaded_files.json'
         self.uploaded_files = {}
         self.fav = set()
         self.api_version = 0
@@ -614,7 +615,8 @@ async def main():
                                 matte           = args.matte,
                                 sequential      = args.sequential,
                                 on              = args.on,
-                                token_file      = args.token_file)
+                                token_file      = args.token_file,
+                                data_dir    = args.data_dir)
     await mon.start_monitoring()
 
 
