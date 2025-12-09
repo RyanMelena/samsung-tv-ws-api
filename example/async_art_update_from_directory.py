@@ -607,8 +607,16 @@ async def main():
     args.folder = os.path.normpath(args.folder.strip())
     
     if not os.path.exists(args.folder):
-        log.warning('folder {} does not exist, exiting'.format(args.folder))
+        log.warning('folder {} does not exist'.format(args.folder))
         os._exit(1)
+
+    args.data_dir = os.path.normpath(args.data_dir.splitlines()[0].strip())
+
+    if not os.path.exists(args.data_dir):
+        log.warning('data_dir {} does not exist'.format(args.data_dir))
+        os._exit(1)
+
+    args.token_file = args.token_file.splitlines()[0].strip()
     
     mon = monitor_and_display(  args.ip,
                                 args.folder,
@@ -619,8 +627,8 @@ async def main():
                                 matte           = args.matte,
                                 sequential      = args.sequential,
                                 on              = args.on,
-                                token_file      = os.path.normpath(args.token_file.strip()),
-                                data_dir        = os.path.normpath(args.data_dir.strip()))
+                                token_file      = args.token_file,
+                                data_dir        = args.data_dir
     await mon.start_monitoring()
 
 
