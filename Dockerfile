@@ -31,7 +31,7 @@ CMD /app/async_art_update_from_directory.py "$TV_IP" \
 #    --port "$PORT" \
     --folder /app/images \
     --matte "$MATTE" \
-    --data_dir "$DATA_DIR" \
+    --data_dir /app/data \
     --token_file token.txt \
     --update "$SLIDESHOW_UPDATE_INTERVAL_MINS" \
     --check "$CHECK_FOR_NEW_ART_INTERVAL_MINS" \
