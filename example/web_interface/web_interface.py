@@ -25,7 +25,7 @@ from exif_data import ExifData
 
 __version__ = '1.2.0'
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 def parseargs():
     # Add command line argument parsing
@@ -340,4 +340,3 @@ if __name__ == "__main__":
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit):
         os._exit(1)    
-
