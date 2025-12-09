@@ -27,7 +27,7 @@ ENV DEBUG=false
 
 EXPOSE ${PORT}/tcp
 
-CMD async_art_update_from_directory.py "$TV_IP" \
+CMD /app/async_art_update_from_directory.py "$TV_IP" \
     --port "$PORT" \
     --folder /app/images \
     --matte "$MATTE" \
