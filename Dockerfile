@@ -18,7 +18,7 @@ COPY example/async_art_update_from_directory.py async_art_update_from_directory.
 
 # Define an environment variable for the port with a default value
 ENV MATTE=none
-ENV SLIDESHOW_UPDATE_INTERVAL_MINS=360
+ENV SLIDESHOW_UPDATE_INTERVAL_MINS=60
 ENV CHECK_FOR_NEW_ART_INTERVAL_MINS=5
 ENV DEBUG=false
 
