@@ -610,7 +610,7 @@ async def main():
         log.warning('folder {} does not exist'.format(args.folder))
         os._exit(1)
 
-    args.data_dir = os.path.normpath(args.data_dir.splitlines()[0].strip())
+    args.data_dir = os.path.normpath(args.data_dir.strip())
 
     if not os.path.exists(args.data_dir):
         log.warning('data_dir {} does not exist'.format(args.data_dir))
