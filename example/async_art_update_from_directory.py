@@ -247,7 +247,7 @@ class monitor_and_display:
         self.current_content_id = None
         self.pil = PIL_methods(self)
         self.log.info('program_data_path is: ' + self.program_data_path)
-        self.log.info('Creating SamsungTVAsyncArt with host: ' + self.ip + ', port: ' + port + ', and token_file: ' + self.token_file)
+        self.log.info('Creating SamsungTVAsyncArt with host: ' + self.ip + ' and token_file: ' + self.token_file)
         self.tv = SamsungTVAsyncArt(host=self.ip, port=8002, token_file=self.token_file)
         try:
             #doesn't work in Windows
