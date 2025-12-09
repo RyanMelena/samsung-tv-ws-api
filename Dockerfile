@@ -9,7 +9,7 @@ COPY README.md README.md
 COPY pyproject.toml pyproject.toml
 COPY requirements.txt requirements.txt
 COPY setup.py setup.py
-RUN pip3 install .
+RUN pip3 install . -r requirements.txt
 
 WORKDIR /app
 COPY example/web_interface web_interface
