@@ -614,6 +614,8 @@ async def main():
     
     args.data_dir = os.path.normpath(args.data_dir)
 
+    log.info('Normalized data_dir path is {}'.format(args.data_dir))
+
     if not os.path.exists(args.data_dir):
         log.warning('data_dir {} does not exist'.format(args.data_dir))
         os._exit(1)
