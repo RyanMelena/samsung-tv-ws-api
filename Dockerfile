@@ -17,7 +17,7 @@ WORKDIR /app
 COPY example/async_art_update_from_directory.py async_art_update_from_directory.py
 
 # Define an environment variable for the port with a default value
-ENV PORT=5000
+#ENV PORT=5000
 ENV DATA_DIR = /app/data
 ENV MATTE=none
 ENV SLIDESHOW_UPDATE_INTERVAL_MINS=360
@@ -28,7 +28,7 @@ ENV DEBUG=false
 EXPOSE ${PORT}/tcp
 
 CMD /app/async_art_update_from_directory.py "$TV_IP" \
-    --port "$PORT" \
+#    --port "$PORT" \
     --folder /app/images \
     --matte "$MATTE" \
     --data_dir "$DATA_DIR" \
