@@ -227,6 +227,8 @@ class monitor_and_display:
     
     def __init__(self, ip, folder, period=5, update_time=1440, include_fav=False, sync=True, matte='none', sequential=False, on=False, token_file=None, data_dir=None):
         self.log = logging.getLogger('Main.'+__class__.__name__)
+        self.log.debug('incoming token_file is: %s', token_file)
+        self.log.debug('incoming data_dir is %s', data_dir)
         self.debug = self.log.getEffectiveLevel() <= logging.DEBUG
         self.ip = ip
         self.folder = folder
@@ -246,8 +248,8 @@ class monitor_and_display:
         self.start = time.time()
         self.current_content_id = None
         self.pil = PIL_methods(self)
-        self.log.info('program_data_path is: ' + self.program_data_path)
-        self.log.info('Creating SamsungTVAsyncArt with host: ' + self.ip + ' and token_file: ' + self.token_file)
+        self.log.info('program_data_path is: %s', self.program_data_path)
+        self.log.info('Creating SamsungTVAsyncArt with host: %s and token_file: %s', self.ip, self.token_file)
         self.tv = SamsungTVAsyncArt(host=self.ip, port=8002, token_file=self.token_file)
         try:
             #doesn't work in Windows
