@@ -25,7 +25,7 @@ ENV CHECK_FOR_NEW_ART_INTERVAL_MINS=5
 #ENV PREVIEW_DURATION_SECS=360
 ENV DEBUG=false
 
-EXPOSE ${PORT}/tcp
+#EXPOSE ${PORT}/tcp
 
 CMD /app/async_art_update_from_directory.py "$TV_IP" \
 #    --port "$PORT" \
