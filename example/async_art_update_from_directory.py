@@ -240,8 +240,8 @@ class monitor_and_display:
         self.sequential = sequential
         self.on = on
         # Autosave token to file
-        self.token_file = os.path.join(os.path.dirname(os.path.realpath(data_dir)), token_file) if (data_dir and token_file) else './token.txt'
-        self.program_data_path = os.path.join(os.path.dirname(os.path.realpath(data_dir)), 'uploaded_files.json') if data_dir else './uploaded_files.json'
+        self.token_file = os.path.join(data_dir, token_file) if (data_dir and token_file) else './token.txt'
+        self.program_data_path = os.path.join(data_dir, 'uploaded_files.json') if data_dir else './uploaded_files.json'
         self.uploaded_files = {}
         self.fav = set()
         self.api_version = 0
@@ -613,8 +613,6 @@ async def main():
     log.info('Checking provided data_dir {}'.format(args.data_dir))
     
     args.data_dir = os.path.normpath(args.data_dir)
-
-    log.info('Normalized data_dir path is {}'.format(args.data_dir))
 
     if not os.path.exists(args.data_dir):
         log.warning('data_dir {} does not exist'.format(args.data_dir))
