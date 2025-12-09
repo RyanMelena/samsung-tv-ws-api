@@ -604,7 +604,7 @@ async def main():
         logging.getLogger().setLevel(logging.DEBUG)
     log.debug('Debug mode')
     
-    args.folder = os.path.normpath(args.folder)
+    args.folder = os.path.normpath(args.folder.strip())
     
     if not os.path.exists(args.folder):
         log.warning('folder {} does not exist, exiting'.format(args.folder))
@@ -619,8 +619,8 @@ async def main():
                                 matte           = args.matte,
                                 sequential      = args.sequential,
                                 on              = args.on,
-                                token_file      = args.token_file,
-                                data_dir        = args.data_dir)
+                                token_file      = os.path.normpath(args.token_file.strip()),
+                                data_dir        = os.path.normpath(args.data_dir.strip()))
     await mon.start_monitoring()
 
 
