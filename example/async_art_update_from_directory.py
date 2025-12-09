@@ -628,7 +628,7 @@ async def main():
                                 sequential      = args.sequential,
                                 on              = args.on,
                                 token_file      = args.token_file,
-                                data_dir        = args.data_dir
+                                data_dir        = args.data_dir)
     await mon.start_monitoring()
 
 
