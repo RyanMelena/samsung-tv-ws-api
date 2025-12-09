@@ -14,7 +14,7 @@ RUN pip3 install . -r requirements.txt
 WORKDIR /app
 # COPY example/web_interface web_interface
 # RUN pip3 install -r web_interface/requirements.txt
-COPY async_art_update_from_directory.py async_art_update_from_directory.py
+COPY example/async_art_update_from_directory.py async_art_update_from_directory.py
 
 # Define an environment variable for the port with a default value
 ENV PORT=5000
